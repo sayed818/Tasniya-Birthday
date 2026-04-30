@@ -1,0 +1,263 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tasniya's Liquid Symphony</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Outfit:wght@300;400;900&family=Great+Vibes&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --maroon-top: #3a0000;
+            --olive-bottom: #2d301d;
+            --gold: #d4af37;
+            --cream: #fdf5e6;
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(to bottom, var(--maroon-top) 0%, var(--olive-bottom) 100%);
+            overflow: hidden;
+            color: var(--cream);
+            touch-action: manipulation;
+        }
+
+        .magic-particle {
+            position: fixed; z-index: 10000;
+            pointer-events: none; user-select: none;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6));
+        }
+
+        .portal-frame {
+            position: absolute; 
+            width: 88%; max-width: 380px; height: 520px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 50px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; padding: 2rem;
+            text-align: center; box-shadow: 0 40px 90px rgba(0,0,0,0.8);
+            opacity: 0; transform: scale(0.7) translateY(80px);
+            transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+            pointer-events: none; z-index: 10;
+        }
+
+        .portal-frame.active {
+            opacity: 1; transform: scale(1) translateY(0);
+            pointer-events: all;
+        }
+
+        .portal-frame.exit {
+            opacity: 0; transform: scale(1.3) translateY(-80px);
+            filter: blur(20px);
+        }
+
+        .aesthetic-h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700; font-style: italic;
+            background: linear-gradient(180deg, var(--gold) 0%, #fff 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .vow-msg-font {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+            font-size: 11px;
+            color: rgba(253, 245, 230, 0.85);
+            line-height: 2.2;
+            text-transform: uppercase;
+        }
+
+        .signature-line {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            font-size: 2.8rem;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-i-am-yours {
+            background: linear-gradient(135deg, #500000, #200000);
+            border: 1.5px solid var(--gold);
+            color: var(--gold); 
+            padding: 16px 40px; border-radius: 100px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem; letter-spacing: 3px;
+            font-weight: 700; cursor: pointer; transition: 0.5s;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        .btn-no-bold {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 900; 
+            font-size: 0.9rem;
+            letter-spacing: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            margin-top: 20px;
+            padding: 10px;
+            text-transform: uppercase;
+        }
+
+        #music-btn {
+            position: fixed; top: 20px; right: 20px;
+            width: 45px; height: 45px; border-radius: 50%;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--gold);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000; cursor: pointer;
+        }
+
+        .divider {
+            width: 40px; height: 1px; background: var(--gold);
+            opacity: 0.3; margin: 1.5rem 0;
+        }
+
+        #yt-hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="music-btn" onclick="toggleMusic()">
+        <span id="music-icon" style="font-size: 1.2rem;">🎵</span>
+    </div>
+
+    <div id="yt-hidden">
+        <iframe id="audio-player" 
+            src="https://www.youtube.com/embed/nyuo99YwF80?enablejsapi=1&autoplay=0&loop=1&playlist=nyuo99YwF80" 
+            allow="autoplay">
+        </iframe>
+    </div>
+
+    <div class="flex items-center justify-center w-full h-full">
+        
+        <!-- Portal 1 -->
+        <div class="portal-frame active" id="p1">
+            <span class="text-[9px] tracking-[0.8em] uppercase opacity-40 mb-3">Volume I</span>
+            <h1 class="aesthetic-h1 text-5xl mb-2">[Tasniya]</h1>
+            <div class="divider"></div>
+            <p class="font-serif italic text-2xl mb-10 text-[#d4af37]">[Wait for the magic...]</p>
+            <div class="text-3xl mb-10 animate-pulse opacity-60">🌹</div>
+            <button onclick="changePortal(1, 2, true)" class="btn-i-am-yours" style="font-size: 0.7rem; width: auto; padding: 12px 30px;">[Step Inside]</button>
+        </div>
+
+        <!-- Portal 2 -->
+        <div class="portal-frame" id="p2">
+            <span class="text-[9px] tracking-[0.8em] uppercase opacity-40 mb-3">Volume II</span>
+            <h2 class="aesthetic-h1 text-3xl mb-6">[Ethereal Whispers]</h2>
+            <div class="italic text-cream font-light opacity-80 leading-relaxed space-y-5 mb-10">
+                <p class="text-[10px] tracking-widest uppercase">["In every breath, in every star..."]</p>
+                <p class="text-xl italic" style="color: var(--gold);">[You are the art I keep forever.]</p>
+            </div>
+            <div class="divider"></div>
+            <button onclick="changePortal(2, 3)" class="btn-i-am-yours" style="font-size: 0.7rem; width: auto; padding: 12px 30px;">[Proceed]</button>
+        </div>
+
+        <!-- Portal 3 -->
+        <div class="portal-frame" id="p3">
+            <span class="text-[9px] tracking-[0.8em] uppercase opacity-40 mb-5">The Vow</span>
+            <div id="vowContent">
+                <p class="vow-msg-font mb-12">
+                    [If the stars fall today,]<br>
+                    [will you still be my eternity?]
+                </p>
+                <div class="w-full flex flex-col items-center">
+                    <button onclick="triggerMagic()" id="yesBtn" class="btn-i-am-yours">[I AM YOURS ❤️]</button>
+                    <button onmouseover="teleport(this)" onclick="teleport(this)" id="noBtn" class="btn-no-bold">[NO]</button>
+                </div>
+            </div>
+            <div id="vowSuccess" class="hidden animate-in zoom-in duration-1000">
+                <p class="signature-line">[You are mine forever! ❤️]</p>
+                <div class="divider mx-auto"></div>
+                <button onclick="changePortal(3, 4)" class="btn-i-am-yours" style="font-size: 0.7rem; width: auto; padding: 12px 30px;">[Final Reality →]</button>
+            </div>
+        </div>
+
+        <!-- Portal 4 -->
+        <div class="portal-frame" id="p4">
+            <h1 class="aesthetic-h1 text-6xl mb-4">[Infinite.]</h1>
+            <p class="signature-line">[You are mine forever.]</p>
+            <div class="divider"></div>
+            <div class="flex space-x-10 text-3xl opacity-80">
+                <span>🌹</span><span>🌿</span><span>💍</span>
+            </div>
+            <p class="mt-14 text-[9px] tracking-[1.2em] uppercase opacity-30 font-bold">[Forever Starts Now]</p>
+        </div>
+    </div>
+
+    <script>
+        let isPlaying = false;
+        const player = document.getElementById('audio-player');
+        function toggleMusic() {
+            if(!isPlaying) {
+                player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                document.getElementById('music-icon').innerText = '⏸️';
+                isPlaying = true;
+            } else {
+                player.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                document.getElementById('music-icon').innerText = '🎵';
+                isPlaying = false;
+            }
+        }
+        function changePortal(current, next, play = false) {
+            if(play && !isPlaying) toggleMusic();
+            const curFrame = document.getElementById('p'+current);
+            curFrame.classList.remove('active');
+            curFrame.classList.add('exit');
+            setTimeout(() => { document.getElementById('p'+next).classList.add('active'); }, 500);
+        }
+        function teleport(btn) {
+            const maxX = window.innerWidth - 100;
+            const maxY = window.innerHeight - 50;
+            btn.style.position = 'fixed';
+            btn.style.left = Math.max(10, Math.random() * maxX) + 'px';
+            btn.style.top = Math.max(10, Math.random() * maxY) + 'px';
+            btn.style.zIndex = '100000';
+            btn.style.margin = '0';
+        }
+        function triggerMagic() {
+            document.getElementById('vowContent').classList.add('hidden');
+            document.getElementById('vowSuccess').classList.remove('hidden');
+            const icons = ['🌹', '🌿', '💍', '✨', '💖', '💎', '🥂'];
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            for(let i=0; i<160; i++) {
+                setTimeout(() => spawn(cx, cy, true, icons), i * 7);
+            }
+            setInterval(() => {
+                spawn(Math.random() * window.innerWidth, -50, false, icons);
+            }, 120);
+        }
+        function spawn(x, y, isExplosion, icons) {
+            const p = document.createElement('div');
+            p.className = 'magic-particle';
+            p.innerText = icons[Math.floor(Math.random() * icons.length)];
+            p.style.left = x + 'px';
+            p.style.top = y + 'px';
+            p.style.fontSize = (Math.random() * 15 + 22) + 'px';
+            if(isExplosion) {
+                const angle = Math.random() * Math.PI * 2;
+                const dist = Math.random() * 600 + 50;
+                p.animate([
+                    { transform: 'translate(-50%, -50%) scale(0)', opacity: 1 },
+                    { transform: `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px) rotate(${Math.random()*720}deg) scale(1.4)`, opacity: 0 }
+                ], { duration: 2500, easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)', fill: 'forwards' });
+            } else {
+                p.animate([
+                    { transform: 'translateY(0)', opacity: 1 },
+                    { transform: `translateY(110vh) rotate(360deg)`, opacity: 0 }
+                ], { duration: 5500, easing: 'linear', fill: 'forwards' });
+            }
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 5500);
+        }
+    </script>
+</body>
+</html>
+
+```
